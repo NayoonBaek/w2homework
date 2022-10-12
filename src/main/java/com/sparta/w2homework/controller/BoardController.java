@@ -17,29 +17,30 @@ public class BoardController {
     private final BoardRepository boardRepository;
     private final BoardService boardService;
 
-    @PostMapping("/api/boards")
+    @PostMapping("/api/auth/post")
     public Board createBoard(@RequestBody BoardRequestDto requestDto){
         Board board = new Board(requestDto);
         return boardRepository.save(board);
     }
 
-    @GetMapping("/api/boards")
+
+    @GetMapping("/api/post")
     public List<Board> getBoard(){
         return boardRepository.findAllByOrderByCreatedAtDesc();
     }
 
-    @GetMapping("/api/boards/{id}")
+    @GetMapping("/api/post/{id}")
     public Optional<Board> findById(@PathVariable Long id) {
         return boardRepository.findById(id);
     }
 
-    @DeleteMapping("/api/boards/{id}")
+    @DeleteMapping("/api/auth/post/{id}")
     public String deleteBoard(@PathVariable Long id){
         boardRepository.deleteById(id);
         return "삭제완료";
     }
 
-    @PutMapping("/api/boards/{id}")
+    @PutMapping("/api/auth/post/{id}")
     public String updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
         boardService.update(id, requestDto);
         return "수정완료";
