@@ -29,18 +29,15 @@ public class Comment extends Timestamped{
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    public Comment(CommentRequestDto requestDto){
-        this.comment = requestDto.getComment();
-        this.username = requestDto.getUsername();
-    }
 
-    public Comment(CommentRequestDto commentRequestDto, Board board) {
+
+    public Comment(CommentRequestDto commentRequestDto, Post post) {
         this.comment = commentRequestDto.getComment();
         this.username = commentRequestDto.getUsername();
-        this.board = board;
+        this.post = post;
 
     }
 

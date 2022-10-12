@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public Long update(Long id, CommentRequestDto requestDto){
-         Comment comment = commentRepository.findById(id).orElseThrow(
+    public Long update(Long postid, CommentRequestDto requestDto){
+         Comment comment = commentRepository.findById(postid).orElseThrow(
                  ()->new IllegalArgumentException("아이디가 존재하지 않습니다.")
          );
          comment.update(requestDto);
