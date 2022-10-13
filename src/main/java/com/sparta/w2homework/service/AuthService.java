@@ -4,6 +4,7 @@ import com.sparta.w2homework.dto.MemberRequestDto;
 import com.sparta.w2homework.dto.MemberResponseDto;
 import com.sparta.w2homework.dto.TokenDto;
 import com.sparta.w2homework.dto.TokenRequestDto;
+import com.sparta.w2homework.entity.Authority;
 import com.sparta.w2homework.entity.Member;
 import com.sparta.w2homework.entity.RefreshToken;
 import com.sparta.w2homework.jwt.TokenProvider;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static org.apache.coyote.http11.Constants.a;
 
 @Service
@@ -29,6 +33,38 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
+
+//    public boolean registerUser(MemberRequestDto requestDto, Long id, String pw) {
+//        Pattern username = Pattern.compile("^[A-Za-z[0-9]]{4,12}$");
+//        String name = requestDto.getNickname();
+//        Matcher matcher = username.matcher(name);
+//
+//        if (!(matcher.matches())){
+//            return false;
+//        }
+//
+//        Pattern password = Pattern.compile("^[a-z[0-9]]{4,32}$");
+//        String passwords = requestDto.getPassword();
+//        Matcher matchers = password.matcher(passwords);
+//        if (!(matchers.matches())){
+//            return false;
+//        }
+//
+//        if (!(passwords.equals(requestDto.getPassword()))){
+//            return false;
+//        }
+//
+//
+//// 패스워드 암호화
+//        passwords = passwordEncoder.encode(passwords);
+//        Authority authority = Authority.ROLE_ADMIN;
+//
+//        Member member = new Member(name, passwords, authority);
+//        MemberRepository.save(member);
+//
+//        return true;
+//    }
+
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
         //회원가입 (signup)
@@ -36,12 +72,6 @@ public class AuthService {
         if (memberRepository.existsByNickname(memberRequestDto.getNickname())) {
             throw new RuntimeException("중복된 닉네임입니다.");
         }
-//        if(!/^[a-zA-Z0-9]{4,12}$/memberRequestDto.getNickname()) {
-//            throw new RuntimeException("닉네임은 최소 4자 이상, 12자 이하 알파벳 대소문자(a~z, A~Z), 숫자(0~9)로 구성");
-//        }
-//        if(!/^[a-zA-Z0-9]{4,32}$/memberRequestDto.getPassword()) {
-//            throw new RuntimeException("비밀번호는 최소 4자 이상이며, 32자 이하 알파벳 소문자(a~z), 숫자(0~9) 로 구성");
-//        }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
         return MemberResponseDto.of(memberRepository.save(member));
