@@ -1,14 +1,11 @@
 package com.sparta.w2homework.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.w2homework.dto.CommentRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 import javax.persistence.*;
-import java.util.List;
 
 
 //@Builder //
@@ -29,6 +26,7 @@ public class Comment extends Timestamped{
     private String comment;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "post_id")
     private Post post;
 

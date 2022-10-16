@@ -23,9 +23,9 @@ public class Post extends Timestamped{
 
     private String username;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comment = new ArrayList<>();
 
     public Post(PostRequestDto postDto) {
         this.title = postDto.getTitle();
